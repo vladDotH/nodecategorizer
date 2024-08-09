@@ -1,0 +1,22 @@
+import path from "path";
+import swaggerAutogen from "swagger-autogen";
+import * as fs from "fs";
+import { configService } from "@/services/config.service";
+
+const doc = {
+  info: {
+    title: "Categories API",
+  },
+  host: configService.APP_URL,
+  basePath: `/${configService.APP_PREFIX}`,
+  schemes: [configService.PROTOCOL],
+};
+
+const conrtollersFolder = "src/controllers";
+const outputFile = path.join(__dirname, "swagger.json");
+
+const endpointsFiles = fs
+  .readdirSync(conrtollersFolder)
+  .map((file) => `${conrtollersFolder}/${file}`);
+
+swaggerAutogen()(outputFile, endpointsFiles, doc);
