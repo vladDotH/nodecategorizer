@@ -1,6 +1,6 @@
 import Router from "koa-router";
 import { categoriesService } from "@/services/categories.service";
-import { validate } from "@/util/validation";
+import { uuidValidator, validate } from "@/util/validation";
 import {
   CategoryCreateDto,
   CategorySearchDto,
@@ -23,8 +23,10 @@ categoriesController.post("/", async (ctx) => {
       active: true
     }
   }*/
+
   const body = validate(CategoryCreateDto, ctx.request.body);
-  ctx.body = await categoriesService.addCategory(body);
+  ctx.body = (await categoriesService.addCategory(body)) ?? undefined;
+
   if (ctx.body) {
     ctx.status = StatusCodes.CREATED;
   } else {
@@ -35,8 +37,10 @@ categoriesController.post("/", async (ctx) => {
 categoriesController.get("/:idOrSlug", async (ctx) => {
   // #swagger.tags = ['Categories']
   // #swagger.summary = 'Получить категорию по id или slug'
+
   const idOrSlug = validate(Joi.string(), ctx.params.idOrSlug);
-  ctx.body = await categoriesService.getCategory(idOrSlug);
+  ctx.body = (await categoriesService.getCategory(idOrSlug)) ?? undefined;
+
   if (ctx.body) {
     ctx.status = StatusCodes.OK;
   } else {
@@ -57,10 +61,10 @@ categoriesController.put("/:id", async (ctx) => {
     }
   }*/
 
-  const id = validate(Joi.string(), ctx.params.id);
+  const id = validate(uuidValidator, ctx.params.id);
   const body = validate(CategoryUpdateDto, ctx.request.body);
 
-  ctx.body = await categoriesService.updateCategory(id, body);
+  ctx.body = (await categoriesService.updateCategory(id, body)) ?? undefined;
   if (ctx.body) {
     ctx.status = StatusCodes.OK;
   } else {
@@ -72,9 +76,9 @@ categoriesController.delete("/:id", async (ctx) => {
   // #swagger.tags = ['Categories']
   // #swagger.summary = 'Удалить категорию по id'
 
-  const id = validate(Joi.string(), ctx.params.id);
+  const id = validate(uuidValidator, ctx.params.id);
+  ctx.body = (await categoriesService.deleteCategory(id)) ?? undefined;
 
-  ctx.body = await categoriesService.deleteCategory(id);
   if (ctx.body) {
     ctx.status = StatusCodes.OK;
   } else {
