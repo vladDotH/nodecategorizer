@@ -20,10 +20,10 @@ export const CategoryUpdateDto = Joi.object<CategoryUpdate>({
 });
 
 export const CategorySearchDto = Joi.object<CategoryFilter>({
-  name: Joi.string(),
-  description: Joi.string(),
+  name: Joi.string().custom((value) => value.trim()),
+  description: Joi.string().custom((value) => value.trim()),
   active: Joi.boolean(),
-  search: Joi.string(),
+  search: Joi.string().custom((value) => value.trim()),
   pageSize: Joi.number().min(0).default(2),
   page: Joi.number()
     .min(0)
@@ -31,5 +31,7 @@ export const CategorySearchDto = Joi.object<CategoryFilter>({
     .custom((value) => {
       if (value == 0) return 0;
     }),
-  sort: Joi.string().default("createdDate"),
+  sort: Joi.string()
+    .default("createdDate")
+    .custom((value) => value.trim()),
 });
