@@ -14,7 +14,7 @@ export type CategoryFilter = Partial<
   Pick<Category, "name" | "description" | "active">
 > & {
   search?: string;
-  pageSize?: number;
-  page?: number;
-  sort?: string;
+  pageSize: number;
+  page: number;
+  sort: string;
 };
