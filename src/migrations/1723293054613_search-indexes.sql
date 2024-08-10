@@ -1,4 +1,5 @@
 -- Up Migration
+create extension btree_gin;
 create extension unaccent;
 
 create or replace function immutable_unaccent(text)
@@ -19,3 +20,4 @@ drop index "Categories_description_index";
 drop function immutable_unaccent;
 
 drop extension unaccent;
+drop extension btree_gin;
