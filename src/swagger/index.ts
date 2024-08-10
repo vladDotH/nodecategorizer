@@ -8,7 +8,7 @@ const doc = {
     title: "Categories API",
   },
   host: configService.APP_URL,
-  basePath: `/${configService.APP_PREFIX}`,
+  basePath: `${configService.APP_PREFIX}`,
   schemes: [configService.PROTOCOL],
 };
 
