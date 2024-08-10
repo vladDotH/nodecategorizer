@@ -89,6 +89,7 @@ categoriesController.delete("/:id", async (ctx) => {
 categoriesController.get("/", async (ctx) => {
   // #swagger.tags = ['Categories']
   // #swagger.summary = 'Поиск категорий'
+  /* #swagger.parameters['search'] = {} */
   /* #swagger.parameters['name'] = {} */
   /* #swagger.parameters['description'] = {} */
   /* #swagger.parameters['active'] = { type: 'boolean' } */
@@ -96,7 +97,7 @@ categoriesController.get("/", async (ctx) => {
   /* #swagger.parameters['page'] = { type: 'number' } */
   /* #swagger.parameters['sort'] = {} */
 
-  const params = validate(CategorySearchDto, ctx.request.query);
+  const params = validate(CategorySearchDto, { ...ctx.request.query });
 
   ctx.body = await categoriesService.getCategories(params);
   ctx.status = StatusCodes.OK;
