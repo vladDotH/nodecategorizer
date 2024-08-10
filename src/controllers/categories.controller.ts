@@ -98,6 +98,6 @@ categoriesController.get("/", async (ctx) => {
 
   const params = validate(CategorySearchDto, ctx.request.query);
 
-  ctx.body = categoriesService.getCategories(params);
+  ctx.body = await categoriesService.getCategories(params);
   ctx.status = StatusCodes.OK;
 });
