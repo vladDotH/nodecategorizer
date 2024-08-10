@@ -9,6 +9,7 @@ import format from "pg-format";
 import { logger } from "@/util/logger";
 import * as uuid from "uuid";
 import { dbService } from "@/services/db.service";
+import * as _ from "lodash";
 
 async function addCategory(
   category: CategoryCreation,
@@ -84,17 +85,17 @@ async function deleteCategory(id: string): Promise<Category | null> {
 function getCategoriesSearchQuery(params: CategoryFilter) {
   const searchQueries: string[] = [];
 
-  if (params.active) {
-    searchQueries.push(`active = "${format.literal(params.active)}"`);
+  if (!_.isNil(params.active)) {
+    searchQueries.push(`active = ${format.literal(params.active)}`);
   }
 
-  if (params.search) {
+  if (!_.isNil(params.search)) {
     const searchLiteral = format.literal(`%${params.search}%`);
     searchQueries.push(`(
       immutable_unaccent(name) ilike unaccent(${searchLiteral}) or 
       immutable_unaccent(description) ilike unaccent(${searchLiteral})
     )`);
-  } else if (params.name || params.description) {
+  } else if (!_.isNil(params.name) || !_.isNil(params.description)) {
     searchQueries.push(
       "(" +
         (["name", "description"] as const)
