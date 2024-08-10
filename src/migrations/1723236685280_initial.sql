@@ -1,5 +1,5 @@
 -- Up Migration
-create table "Category"
+create table "Categories"
 (
     id             uuid primary key        default gen_random_uuid(),
     slug           varchar unique not null,
@@ -12,9 +12,10 @@ create table "Category"
     description_ts tsvector generated always as ( to_tsvector('english', description) ) stored
 );
 
-create index "Category_name_index" on "Category" using gin (name_ts);
-create index "Category_description_index" on "Category" using gin (description_ts);
-create index "Category_search_index" on "Category" using gin (name_ts, description_ts);
+create index "Categories_slug_index" on "Categories" (slug);
+create index "Categories_name_index" on "Categories" using gin (name_ts);
+create index "Categories_description_index" on "Categories" using gin (description_ts);
+create index "Categories_search_index" on "Categories" using gin (name_ts, description_ts);
 
 -- Down Migration
-drop table "Category";
+drop table "Categories";
