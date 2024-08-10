@@ -1,0 +1,22 @@
+version: "3"
+
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_DB=categorizer
+      - POSTGRES_PASSWORD=localdbpass
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+
+  server:
+    build: ./
+    restart: no
+    command: sh -c "pnpm migrate up && pnpm start:prod"
+    expose:
+      - 3335
+    ports:
+      - "3335:3335"
+    depends_on:
+      - db
