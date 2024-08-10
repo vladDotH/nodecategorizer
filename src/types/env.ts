@@ -15,6 +15,4 @@ export interface Env {
   DB_MAX_POOL: number;
   DB_IDLE_TIMEOUT: number;
   DB_CONN_TIMEOUT: number;
-
-  SWAGGER_PREFIX: string;
 }
