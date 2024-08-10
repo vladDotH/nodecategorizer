@@ -5,7 +5,7 @@ create table "Categories"
     slug           varchar unique not null,
     name           varchar        not null,
     description    text,
-    createdDate    timestamp      not null default current_timestamp,
+    "createdDate"    timestamp      not null default current_timestamp,
     active         bool           not null,
 
     name_ts        tsvector generated always as ( to_tsvector('english', name) ) stored,
