@@ -24,12 +24,14 @@ export const CategorySearchDto = Joi.object<CategoryFilter>({
   description: Joi.string().custom((value) => value.trim()),
   active: Joi.boolean(),
   search: Joi.string().custom((value) => value.trim()),
-  pageSize: Joi.number().min(0).default(2),
+  pageSize: Joi.number().integer().min(0).default(2),
   page: Joi.number()
+    .integer()
     .min(0)
     .default(1)
     .custom((value) => {
-      if (value == 0) return 0;
+      if (value < 1) return 1;
+      else return value;
     }),
   sort: Joi.string()
     .default("-createdDate")
