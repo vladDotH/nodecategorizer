@@ -48,6 +48,10 @@ async function updateCategory(
 
   const existingCols = cols.filter((key) => key in data);
 
+  if (!existingCols.length) {
+    return null;
+  }
+
   const updateQuery = existingCols
     .map((col) => `${col} = ${format.literal(data[col])}`)
     .join(",");
