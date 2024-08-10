@@ -32,6 +32,6 @@ export const CategorySearchDto = Joi.object<CategoryFilter>({
       if (value == 0) return 0;
     }),
   sort: Joi.string()
-    .default("createdDate")
+    .default("-createdDate")
     .custom((value) => value.trim()),
 });
