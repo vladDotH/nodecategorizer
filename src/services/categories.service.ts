@@ -123,7 +123,7 @@ async function getCategoriesOrderQuery(params: CategoryFilter) {
   const cols = await dbService.getColumns("Categories");
 
   return cols.includes(sortCol)
-    ? `order by ${format.ident(params.sort)} ${order}`
+    ? `order by ${format.ident(sortCol)} ${order}`
     : "";
 }
 
