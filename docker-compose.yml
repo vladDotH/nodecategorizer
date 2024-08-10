@@ -12,7 +12,7 @@ services:
 
   server:
     build: ./
-    restart: no
+    restart: always
     command: sh -c "pnpm migrate up && pnpm start:prod"
     expose:
       - 3335
