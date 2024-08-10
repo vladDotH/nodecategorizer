@@ -4,7 +4,7 @@ import { docsController } from "@/controllers/docs.controller";
 import { configService } from "@/services/config.service";
 
 export const apiController = new Router({
-  prefix: `/${configService.APP_PREFIX}`,
+  prefix: `${configService.APP_PREFIX}`,
 });
 
 apiController.use(docsController.routes());
