@@ -114,14 +114,15 @@ function getCategoriesSearchQuery(params: CategoryFilter) {
 
 async function getCategoriesOrderQuery(params: CategoryFilter) {
   let order = "asc";
-  if (params.sort.startsWith("-")) {
+  let sortCol = params.sort;
+  if (sortCol.startsWith("-")) {
     order = "desc";
-    params.sort = params.sort.slice(1);
+    sortCol = params.sort.slice(1);
   }
 
   const cols = await dbService.getColumns("Categories");
 
-  return cols.includes(params.sort)
+  return cols.includes(sortCol)
     ? `order by ${format.ident(params.sort)} ${order}`
     : "";
 }
